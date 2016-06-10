@@ -1,30 +1,34 @@
 class MojitoCli < Formula
-  desc ""
-  homepage ""
+  desc "Mojito CLI is the command line interface of Mojito: a continuous localization platform"
+  homepage "http://opensource.box.com/mojito"
+  
+  url "https://github.com/box/mojito/releases/download/v0.33/mojito-cli-0.33.jar"
+  sha256 "53c0af93fbd512f72fd56d7307cc0d0ab1d23e70ed170496ea7b80ea074c2ea2"
 
-  #url "https://github.com/box/mojito/releases/download/v0.33/mojito-cli-0.33.jar"
-  #sha256 "53c0af93fbd512f72fd56d7307cc0d0ab1d23e70ed170496ea7b80ea074c2ea2"
+  head "git@github.com:box/mojito.git", :using => :git, :branch => "master"
 
-  url "git@github.com:box/mojito.git", :using => :git, :tag => "v0.33"
-  version "0.33"
+  depends_on :java => "1.7+"
 
-  head "git@github.com:box/mojito.git", :using => :git, :branch => "master" # , :tag => "v0.33"
-
-  #depends_on :java => "1.7+"
-  depends_on "maven" => :build
+  if build.head?
+    depends_on "maven" => :build
+  end
 
   def install
-
-    # building the jar for now but we probably want to get it built directly
-    system "mvn package -DskipTests -P!frontend"
-    libexec.install Dir["cli/target/mojito-cli-*.jar"]
+ 
+    if build.head?
+      # build the jar
+      system "mvn package -DskipTests -P!frontend"
+      libexec.install Dir["cli/target/mojito-cli-*.jar"]
+    else
+      # use downloaded jar
+      libexec.install Dir["mojito-cli-*.jar"]         
+    end
 
     # Create the shell script to execute mojito cli
     (bin/"mojito").write <<-EOS.undent
           #!/bin/sh
-          java -jar #{libexec}/mojito-cli-*.jar "$@"
+          java -jar #{libexec}/mojito-cli-*.jar -Dspring.config.location=/usr/local/etc/mojito/cli/ "$@"
     EOS
 
   end
-
 end

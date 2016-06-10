@@ -1,30 +1,34 @@
 class MojitoWebapp < Formula
-  desc ""
-  homepage ""
+  desc "Mojito Webapp, is the server of Mojito: a continuous localization platform"
+  homepage "http://opensource.box.com/mojito"
+  
+  url "https://github.com/box/mojito/releases/download/v0.33/mojito-webapp-0.33.jar"
+  sha256 "53c0af93fbd512f72fd56d7307cc0d0ab1d23e70ed170496ea7b80ea074c2ea2"
 
-  # url "https://github.com/box/mojito/releases/download/v0.33/mojito-webapp-0.33.jar"
-  # sha256 "53c0af93fbd512f72fd56d7307cc0d0ab1d23e70ed170496ea7b80ea074c2ea2"
+  head "git@github.com:box/mojito.git", :using => :git, :branch => "master"
 
-  url "git@github.com:box/mojito.git", :using => :git, :tag => "v0.33"
-  version "0.33"
+  depends_on :java => "1.7+"
 
-  head "git@github.com:box/mojito.git", :using => :git, :branch => "master" # , :tag => "v0.33"
-
-  #depends_on :java => "1.7+"
-  depends_on "maven" => :build
+  if build.head?
+    depends_on "maven" => :build
+  end
 
   def install
+ 
+    if build.head?
+      # build the jar
+      system "mvn package -DskipTests -P!frontend"
+      libexec.install Dir["webapp/target/mojito-webapp-*.jar"]
+    else
+      # use downloaded jar
+      libexec.install Dir["mojito-webapp-*.jar"]         
+    end
 
-    # building the jar for now but we probably want to get it built directly
-    system "mvn package -DskipTests"
-    libexec.install Dir["webapp/target/mojito-webapp-*.jar"]
-
-    # Create the shell script to execute mojito cli
-    (bin/"mojito-webapp").write <<-EOS.undent
+    # Create the shell script to execute mojito webapp
+    (bin/"mojito").write <<-EOS.undent
           #!/bin/sh
-          java -jar #{libexec}/mojito-webapp-*.jar "$@"
+          java -jar #{libexec}/mojito-webapp-*.jar -Dspring.config.location=/usr/local/etc/mojito/webapp/ "$@"
     EOS
 
   end
-
 end
