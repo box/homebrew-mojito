@@ -17,7 +17,7 @@ class MojitoWebapp < Formula
  
     if build.head?
       # build the jar
-      system "mvn package -DskipTests -P!frontend"
+      system "mvn package -DskipTests"
       libexec.install Dir["webapp/target/mojito-webapp-*.jar"]
     else
       # use downloaded jar
