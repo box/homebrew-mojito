@@ -25,7 +25,7 @@ class MojitoWebapp < Formula
     end
 
     # Create the shell script to execute mojito webapp
-    (bin/"mojito").write <<-EOS.undent
+    (bin/"mojito-webapp").write <<-EOS.undent
           #!/bin/sh
           java -jar #{libexec}/mojito-webapp-*.jar -Dspring.config.location=/usr/local/etc/mojito/webapp/ "$@"
     EOS
