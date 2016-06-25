@@ -27,7 +27,7 @@ class MojitoCli < Formula
     # Create the shell script to execute mojito cli
     (bin/"mojito").write <<-EOS.undent
           #!/bin/sh
-          java -jar #{libexec}/mojito-cli-*.jar -Dspring.config.location=/usr/local/etc/mojito/cli/ "$@"
+          java -Dspring.config.location=#{etc}/mojito/cli/ -jar #{libexec}/mojito-cli-*.jar "$@"
     EOS
 
   end

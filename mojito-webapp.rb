@@ -27,7 +27,7 @@ class MojitoWebapp < Formula
     # Create the shell script to execute mojito webapp
     (bin/"mojito-webapp").write <<-EOS.undent
           #!/bin/sh
-          java -jar #{libexec}/mojito-webapp-*.jar -Dspring.config.location=/usr/local/etc/mojito/webapp/ "$@"
+          java -XX:MaxPermSize=128m -Xmx1024m -Dspring.config.location=#{etc}/mojito/webapp/ -jar #{libexec}/mojito-webapp-*.jar "$@"
     EOS
 
   end
