@@ -30,5 +30,24 @@ class MojitoCli < Formula
           java -Dspring.config.location=#{etc}/mojito/cli/ -jar #{libexec}/mojito-cli-*.jar "$@"
     EOS
 
+    # Create the shell script to bash complete mojito cli
+    (buildpath/"mojito").write <<-EOS.undent
+      _mojito()
+      {
+        local cur prev mojito_commands
+        mojito_commands="-h --help demo-create drop-export drop-import drop-xliff-import leveraging-copy-tm pull push \
+        repo-create repo-delete repo-update tm-export tm-import user-create user-delete user-update"
+        COMPREPLY=()
+        cur=${COMP_WORDS[COMP_CWORD]}
+        if [ ${#COMP_WORDS[@]} == 2 ]; then
+          case "$cur" in
+            *) COMPREPLY=( $( compgen -W '$mojito_commands' -- $cur ) );;
+          esac
+        fi
+      } && complete -F _mojito mojito
+    EOS
+
+    bash_completion.install Dir["#{buildpath}/mojito"]
+
   end
 end
