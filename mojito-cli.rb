@@ -2,8 +2,8 @@ class MojitoCli < Formula
   desc "Mojito CLI is the command line interface of Mojito: a continuous localization platform"
   homepage "http://www.mojito.global"
   
-  url "https://github.com/box/mojito/releases/download/v0.72/mojito-cli-0.72.jar"
-  sha256 "c3054ce2751eb1c686f122d352fd75d26f5741200dc115f32dfc4e1e5e825c6f"
+  url "https://github.com/box/mojito/releases/download/v0.73/mojito-cli-0.73.jar"
+  sha256 "13b6ca5a31d7146da82b400589196cb91419d39e76e801f66b573d66d53b914c"
 
   head "git@github.com:box/mojito.git", :using => :git, :branch => "master"
 
