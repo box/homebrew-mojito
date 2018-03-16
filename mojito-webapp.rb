@@ -2,8 +2,8 @@ class MojitoWebapp < Formula
   desc "Mojito Webapp, is the server of Mojito: a continuous localization platform"
   homepage "http://mojito.global"
   
-  url "https://github.com/box/mojito/releases/download/v0.79/mojito-webapp-0.79.jar"
-  sha256 "c982e984fc18e6ab9c83f6c1ae16964a2e47240f675e4d22942c1bd66cc65ce4"
+  url "https://github.com/box/mojito/releases/download/v0.82/mojito-webapp-0.82.jar"
+  sha256 "f798b3f2f9ff49a15c25a2eef066565061d3c01cdc5e10a854323544df1989b6"
 
   head "git@github.com:box/mojito.git", :using => :git, :branch => "master"
 
@@ -25,7 +25,7 @@ class MojitoWebapp < Formula
     end
 
     # Create the shell script to execute mojito webapp
-    (bin/"mojito-webapp").write <<-EOS.undent
+    (bin/"mojito-webapp").write <<~EOS
           #!/bin/sh
           java -XX:MaxPermSize=128m -Xmx1024m -Dspring.config.location=#{etc}/mojito/webapp/ -jar #{libexec}/mojito-webapp-*.jar "$@"
     EOS

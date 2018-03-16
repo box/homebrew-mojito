@@ -2,8 +2,8 @@ class MojitoCli < Formula
   desc "Mojito CLI is the command line interface of Mojito: a continuous localization platform"
   homepage "http://www.mojito.global"
   
-  url "https://github.com/box/mojito/releases/download/v0.79/mojito-cli-0.79.jar"
-  sha256 "227202540290e88f1d6de76714658b10141ac16aae75c15a723f71957afa884d"
+  url "https://github.com/box/mojito/releases/download/v0.82/mojito-cli-0.82.jar"
+  sha256 "5f1b6c213f2d4af6d875e129631f8d25f2d923c4acd12ca8dc6e7d5da2e1b542"
 
   head "git@github.com:box/mojito.git", :using => :git, :branch => "master"
 
@@ -25,13 +25,13 @@ class MojitoCli < Formula
     end
 
     # Create the shell script to execute mojito cli
-    (bin/"mojito").write <<-EOS.undent
+    (bin/"mojito").write <<~EOS
           #!/bin/sh
           java -Dspring.config.location=#{etc}/mojito/cli/ -jar #{libexec}/mojito-cli-*.jar "$@"
     EOS
 
     # Create the shell script to bash complete mojito cli
-    (buildpath/"mojito").write <<-EOS.undent
+    (buildpath/"mojito").write <<~EOS
       _mojito()
       {
         local cur prev mojito_commands
