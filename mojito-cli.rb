@@ -1,27 +1,27 @@
 class MojitoCli < Formula
   desc "Mojito CLI is the command line interface of Mojito: a continuous localization platform"
   homepage "http://www.mojito.global"
-  
+
   url "https://github.com/box/mojito/releases/download/v0.83/mojito-cli-0.83.jar"
   sha256 "fa242d6db4bbb05fe26d9a9b6b1a31f28267bdc31b062f19fdfe5f8bd180c5e1"
 
   head "git@github.com:box/mojito.git", :using => :git, :branch => "master"
 
-  depends_on :java => "1.7+"
+  depends_on :java => "1.8"
 
   if build.head?
     depends_on "maven" => :build
   end
 
   def install
- 
+
     if build.head?
       # build the jar
       system "mvn package -DskipTests -P!frontend"
       libexec.install Dir["cli/target/mojito-cli-*.jar"]
     else
       # use downloaded jar
-      libexec.install Dir["mojito-cli-*.jar"]         
+      libexec.install Dir["mojito-cli-*.jar"]
     end
 
     # Create the shell script to execute mojito cli
