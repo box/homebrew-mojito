@@ -2,8 +2,8 @@ class MojitoWebapp < Formula
   desc "Mojito Webapp, is the server of Mojito: a continuous localization platform"
   homepage "http://mojito.global"
 
-  url "https://github.com/box/mojito/releases/download/v0.90/mojito-webapp-0.90.jar"
-  sha256 "ea0ed25ea69e0b36043f03a868138b78711fe1fbf16f6664f70f8d75007ac69e"
+  url "https://github.com/box/mojito/releases/download/v0.91/mojito-webapp-0.91.jar"
+  sha256 "37bf6755113ef93a39cc14544f1cd906f23a773d5af334ce7e047d89c7080a31"
 
   head "git@github.com:box/mojito.git", :using => :git, :branch => "master"
 
