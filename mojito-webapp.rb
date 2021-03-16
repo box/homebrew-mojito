@@ -7,7 +7,7 @@ class MojitoWebapp < Formula
 
   head "git@github.com:box/mojito.git", :using => :git, :branch => "master"
 
-  depends_on :java => "1.8"
+  depends_on "openjdk@8"
 
   if build.head?
     depends_on "maven" => :build
